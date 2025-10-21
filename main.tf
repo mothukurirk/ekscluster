@@ -24,7 +24,7 @@ module "vpc" {
 # --- EKS Cluster ---
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "20.8.4"
+  version = "21.1.0"
 
   cluster_name    = "eks-cluster"
   cluster_version = "1.30"
@@ -47,3 +47,4 @@ module "eks" {
     Terraform   = "true"
   }
 }
+
