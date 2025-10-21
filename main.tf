@@ -16,6 +16,7 @@ module "vpc" {
 
   enable_nat_gateway = true
   single_nat_gateway = true
+
   tags = {
     "kubernetes.io/cluster/eks-cluster" = "shared"
   }
@@ -28,12 +29,28 @@ module "eks" {
 
   name               = "eks-cluster"
   kubernetes_version = "1.30"
+  endpoint_public_access = true
 
-  # other arguments
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
-  endpoint_public_access = true
+  manage_aws_auth_configmap = true
+
+  aws_auth_roles = [
+    {
+      rolearn  = "arn:aws:iam::735546544739:role/JenkinsEC2"
+      username = "JenkinsEC2"
+      groups   = ["system:masters"]
+    }
+  ]
+
+  aws_auth_users = [
+    {
+      userarn  = "arn:aws:iam::735546544739:user/radhakrishna"
+      username = "radhakrishna"
+      groups   = ["system:masters"]
+    }
+  ]
 
   eks_managed_node_groups = {
     default = {
