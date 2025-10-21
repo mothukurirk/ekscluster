@@ -34,7 +34,7 @@ module "eks" {
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
-    cluster_auth = {
+      cluster_auth = {
     manage_aws_auth_configmap = true
 
     aws_auth_roles = [
@@ -53,7 +53,6 @@ module "eks" {
       }
     ]
   }
-
 
   eks_managed_node_groups = {
     default = {
