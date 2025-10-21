@@ -5,7 +5,6 @@ pipeline {
         stage('Terraform Init & Apply') {
             steps {
                 sh '''
-                    cd ekscluster
                     terraform init
                     terraform apply -auto-approve
                 '''
