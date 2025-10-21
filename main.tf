@@ -38,7 +38,7 @@ module "eks" {
 
   aws_auth_roles = [
     {
-      rolearn  = "arn:aws:iam::735546544739:role/JenkinsonEC2"
+      rolearn  = "arn:aws:iam::735546544739:role/JenkinsEC2"
       username = "JenkinsEC2"
       groups   = ["system:masters"]
     }
