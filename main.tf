@@ -26,15 +26,14 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "21.1.0"
 
-  eks = {
-    cluster_name    = "eks-cluster"
-    cluster_version = "1.30"
+  name               = "eks-cluster"
+  kubernetes_version = "1.30"
 
-    cluster_endpoint_public_access = true
-  }
-
+  # other arguments
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
+
+  endpoint_public_access = true
 
   eks_managed_node_groups = {
     default = {
