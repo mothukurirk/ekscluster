@@ -25,7 +25,7 @@ module "vpc" {
 # --- EKS Cluster ---
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "21.1.0"   # 👈 hard lock to 21.1.0 (not ~>)
+  version = "21.1.0"  # 👈 hard lock
 
   name               = "eks-cluster"
   kubernetes_version = "1.30"
