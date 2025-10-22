@@ -5,7 +5,7 @@ provider "aws" {
 # --- VPC ---
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 21.1.0"
+  version = "6.0.0"
 
   name = "eks-vpc"
   cidr = "10.0.0.0/16"
@@ -25,7 +25,7 @@ module "vpc" {
 # --- EKS Cluster ---
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "21.1.0"
+  version = "~> 21.1.0"
 
   name               = "eks-cluster"
   kubernetes_version = "1.30"
