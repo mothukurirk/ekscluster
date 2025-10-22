@@ -29,9 +29,11 @@ module "eks" {
 
   cluster_name    = "eks-cluster"
   cluster_version = "1.30"
-  vpc_id          = module.vpc.vpc_id
-  subnet_ids      = module.vpc.private_subnets
-  enable_irsa     = true
+
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
+
+  enable_irsa = true
 
   eks_managed_node_groups = {
     default = {
@@ -48,7 +50,7 @@ module "eks" {
   }
 }
 
-# ✅ New sub-module to manage aws-auth
+# --- AWS Auth Config ---
 module "eks_auth" {
   source  = "terraform-aws-modules/eks/aws//modules/aws-auth"
   version = "21.1.0"
@@ -73,3 +75,4 @@ module "eks_auth" {
 
   depends_on = [module.eks]
 }
+
