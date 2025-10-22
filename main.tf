@@ -25,14 +25,33 @@ module "vpc" {
 # --- EKS Cluster ---
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "21.1.0"  # 👈 hard lock
+  version = "21.1.0"
 
-  name               = "eks-cluster"
-  kubernetes_version = "1.30"
-  endpoint_public_access = true
+  cluster_name    = "eks-cluster"
+  cluster_version = "1.30"
+  vpc_id          = module.vpc.vpc_id
+  subnet_ids      = module.vpc.private_subnets
+  enable_irsa     = true
 
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
+  eks_managed_node_groups = {
+    default = {
+      instance_types = ["t3.medium"]
+      min_size       = 1
+      max_size       = 2
+      desired_size   = 1
+    }
+  }
+
+  tags = {
+    Environment = "dev"
+    Terraform   = "true"
+  }
+}
+
+# ✅ New sub-module to manage aws-auth
+module "eks_auth" {
+  source  = "terraform-aws-modules/eks/aws//modules/aws-auth"
+  version = "21.1.0"
 
   manage_aws_auth_configmap = true
 
@@ -52,17 +71,5 @@ module "eks" {
     }
   ]
 
-  eks_managed_node_groups = {
-    default = {
-      instance_types = ["t3.medium"]
-      min_size       = 1
-      max_size       = 2
-      desired_size   = 1
-    }
-  }
-
-  tags = {
-    Environment = "dev"
-    Terraform   = "true"
-  }
+  depends_on = [module.eks]
 }
