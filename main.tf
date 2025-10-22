@@ -35,26 +35,25 @@ module "eks" {
   subnet_ids = module.vpc.private_subnets
 
       cluster_auth = {
-    manage_aws_auth_configmap = true
+manage_aws_auth_configmap = true
 
-    aws_auth_roles = [
-      {
-        rolearn  = "arn:aws:iam::735546544739:role/JenkinsEC2"
-        username = "JenkinsEC2"
-        groups   = ["system:masters"]
-      }
-    ]
-
-    aws_auth_users = [
-      {
-        userarn  = "arn:aws:iam::735546544739:user/radhakrishna"
-        username = "radhakrishna"
-        groups   = ["system:masters"]
-      }
-    ]
+aws_auth_roles = [
+  {
+    rolearn  = "arn:aws:iam::735546544739:role/JenkinsEC2"
+    username = "JenkinsEC2"
+    groups   = ["system:masters"]
   }
+]
 
-  eks_managed_node_groups = {
+aws_auth_users = [
+  {
+    userarn  = "arn:aws:iam::735546544739:user/radhakrishna"
+    username = "radhakrishna"
+    groups   = ["system:masters"]
+  }
+]
+
+eks_managed_node_groups = {
     default = {
       instance_types = ["t3.medium"]
       min_size       = 1
