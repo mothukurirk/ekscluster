@@ -51,9 +51,12 @@ module "eks" {
 }
 
 # --- AWS Auth Config ---
+# --- AWS Auth Config ---
 module "eks_auth" {
-  source  = "terraform-aws-modules/eks/aws//modules/eks-auth"
-  version = "21.1.0"
+  source  = "terraform-aws-modules/eks-auth/aws"
+  version = "1.0.0"
+
+  eks_cluster_name = module.eks.cluster_name
 
   manage_aws_auth_configmap = true
 
@@ -75,4 +78,3 @@ module "eks_auth" {
 
   depends_on = [module.eks]
 }
-
