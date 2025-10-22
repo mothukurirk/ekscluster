@@ -52,7 +52,7 @@ module "eks" {
 
 # --- AWS Auth Config ---
 module "eks_auth" {
-  source  = "terraform-aws-modules/eks/aws//modules/aks-auth"
+  source  = "terraform-aws-modules/eks/aws//modules/eks-auth"
   version = "21.1.0"
 
   manage_aws_auth_configmap = true
